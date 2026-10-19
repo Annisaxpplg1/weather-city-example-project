@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather City</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Library untuk grafik suhu -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="weather-default">
+  <div class="weather-effects">
+    <div class="sun-glow"></div>
+    <div class="rain-layer"></div>
+    <div class="cloud cloud-one"></div>
+    <div class="cloud cloud-two"></div>
+  </div>
+
+  <main class="container">
+
+    <header class="navbar">
+      <a href="#" class="logo">✦ WeatherCity</a>
+      <span class="live-badge">
+        <span class="live-dot"></span>
+        LIVE WEATHER
+      </span>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">CUACA KOTA</p>
+
+      <h1>Kenali cuaca,<br>
+        <span>di kota pilihanmu.</span>
+      </h1>
+
+      <p class="description">
+        Cari kota dan lihat kondisi cuaca serta perubahan suhu udara.
+      </p>
+
+      <form id="searchForm" class="search-form">
+        <input
+          type="text"
+          id="cityInput"
+          placeholder="Masukkan nama kota..."
+          aria-label="Nama kota"
+          required
+        >
+
+        <button type="submit" id="searchButton">
+          Cari Cuaca ↗
+        </button>
+      </form>
+
+      <p id="statusMessage" class="status">
+        Masukkan nama kota untuk memulai.
+      </p>
+
+      <div class="popular-cities">
+        <span>Coba:</span>
+        <button type="button" data-city="Malang">Malang</button>
+        <button type="button" data-city="Surabaya">Surabaya</button>
+        <button type="button" data-city="Jakarta">Jakarta</button>
+        <button type="button" data-city="Bandung">Bandung</button>
+      </div>
+    </section>
+
+    <section class="dashboard">
+
+      <!-- Informasi cuaca -->
+      <article class="card weather-card">
+        <p class="card-label">KONDISI SAAT INI</p>
+
+        <div class="city-header">
+          <div>
+            <h2 id="cityName">Malang</h2>
+            <p id="localTime" class="muted">Memuat waktu...</p>
+          </div>
+
+          <div id="weatherIcon" class="weather-icon">🌤️</div>
+        </div>
+
+        <div class="temperature-row">
+          <div class="temperature">
+            <span id="currentTemp">--</span><sup>°C</sup>
+          </div>
+
+          <div>
+            <p id="conditionText">Memuat cuaca...</p>
+            <p class="muted">
+              Terasa seperti
+              <strong id="feelsLike">--°C</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="weather-stats">
+          <div class="stat">
+            <span>💧</span>
+            <div>
+              <small>Kelembapan</small>
+              <strong id="humidity">--%</strong>
+            </div>
+          </div>
+
+          <div class="stat">
+            <span>〰️</span>
+            <div>
+              <small>Kecepatan angin</small>
+              <strong id="wind">-- km/j</strong>
+            </div>
+          </div>
+
+          <div class="stat">
+            <span>🌡️</span>
+            <div>
+              <small>Suhu maksimum</small>
+              <strong id="maxTemp">--°C</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Grafik suhu -->
+      <article class="card chart-card">
+        <p class="card-label">PANTAU PERUBAHAN</p>
+        <h2>Grafik suhu udara</h2>
+        <p class="muted">Perkiraan suhu beberapa jam ke depan.</p>
+
+        <div class="chart-container">
+          <canvas id="temperatureChart"></canvas>
+        </div>
+
+        <p class="chart-caption">
+          ● Suhu udara per jam
+        </p>
+      </article>
+
+    </section>
+
+    <!-- Prakiraan cuaca per jam -->
+    <section class="forecast-section">
+      <p class="card-label">PRAKIRAAN</p>
+      <h2>Cuaca berikutnya</h2>
+
+      <div id="hourlyForecast" class="hourly-grid">
+        <p class="muted">Menunggu data cuaca...</p>
+      </div>
+    </section>
+
+    <footer>
+      WeatherCity · HTML, CSS & JavaScript
+      <br>
+      Data cuaca: Open-Meteo
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

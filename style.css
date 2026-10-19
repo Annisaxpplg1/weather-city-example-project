@@ -1,0 +1,573 @@
+
+/* ===== DASAR WEB ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --text: #f5f8ff;
+  --muted: rgba(245, 248, 255, 0.7);
+  --accent: #b6f0df;
+  --panel: rgba(255, 255, 255, 0.11);
+  --border: rgba(255, 255, 255, 0.18);
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  background: linear-gradient(135deg, #163955, #286a83, #8bb9bd);
+  transition: background 1s ease;
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container {
+  width: min(1100px, 92%);
+  margin: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== TEMA BERDASARKAN CUACA ===== */
+body.weather-sunny {
+  background: linear-gradient(135deg, #236b91, #64b5c5, #f2c98c);
+}
+
+body.weather-cloudy {
+  background: linear-gradient(135deg, #293e57, #617d92, #aabdc4);
+}
+
+body.weather-rainy {
+  background: linear-gradient(135deg, #101b31, #273f58, #496b7b);
+}
+
+body.weather-stormy {
+  background: linear-gradient(135deg, #101222, #302b48, #47536c);
+}
+
+body.weather-snowy {
+  background: linear-gradient(135deg, #5a7e99, #9dbac8, #dce7e9);
+}
+
+body.weather-foggy {
+  background: linear-gradient(135deg, #475e6b, #8a9da1, #c1ceca);
+}
+
+/* ===== EFEK LATAR BELAKANG ===== */
+.weather-effects {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sun-glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  right: 8%;
+  border-radius: 50%;
+  background: rgba(255, 225, 145, 0.5);
+  filter: blur(20px);
+  opacity: 0;
+}
+
+.weather-sunny .sun-glow {
+  opacity: 1;
+  animation: sunPulse 4s ease-in-out infinite;
+}
+
+.rain-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.weather-rainy .rain-layer,
+.weather-stormy .rain-layer {
+  opacity: 0.4;
+  background-image: repeating-linear-gradient(
+    108deg,
+    transparent 0 20px,
+    rgba(220, 240, 255, 0.45) 21px,
+    transparent 22px 40px
+  );
+  animation: rainFall 0.6s linear infinite;
+}
+
+.cloud {
+  position: absolute;
+  width: 160px;
+  height: 45px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.18);
+  opacity: 0;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 65px;
+  height: 65px;
+  top: -30px;
+  left: 25px;
+}
+
+.cloud::after {
+  width: 80px;
+  height: 80px;
+  top: -40px;
+  right: 20px;
+}
+
+.cloud-one {
+  top: 15%;
+  left: -200px;
+}
+
+.cloud-two {
+  top: 35%;
+  right: -200px;
+}
+
+.weather-cloudy .cloud,
+.weather-rainy .cloud,
+.weather-stormy .cloud,
+.weather-foggy .cloud {
+  opacity: 0.7;
+  animation: cloudDrift 30s linear infinite;
+}
+
+.weather-rainy .cloud,
+.weather-stormy .cloud {
+  background: rgba(15, 25, 43, 0.5);
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 0;
+}
+
+.logo {
+  color: white;
+  text-decoration: none;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.live-badge {
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 10px 13px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #a9f5d5;
+}
+
+/* ===== BAGIAN PENCARIAN ===== */
+.hero {
+  max-width: 700px;
+  padding: 40px 0 30px;
+}
+
+.eyebrow,
+.card-label {
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 13px;
+}
+
+h1 {
+  font-size: clamp(38px, 5vw, 60px);
+  line-height: 1.12;
+  letter-spacing: -2px;
+  margin-bottom: 18px;
+}
+
+h1 span {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.description {
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.search-form {
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  background: white;
+  border-radius: 15px;
+}
+
+.search-form input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: 12px;
+  color: #203c4c;
+}
+
+.search-form button {
+  border: none;
+  border-radius: 10px;
+  padding: 13px 18px;
+  background: var(--accent);
+  color: #173d45;
+  font-weight: bold;
+}
+
+.search-form button:hover {
+  background: #d0f8eb;
+}
+
+.search-form button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.status {
+  margin: 12px 0;
+  color: var(--muted);
+  font-size: 12px;
+  min-height: 16px;
+}
+
+.popular-cities {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.popular-cities > span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.popular-cities button {
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 7px 12px;
+  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 11px;
+}
+
+.popular-cities button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== KARTU CUACA DAN GRAFIK ===== */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.card {
+  padding: 26px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 15px 50px rgba(8, 27, 44, 0.08);
+}
+
+.city-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.city-header h2,
+.chart-card h2,
+.forecast-section h2 {
+  font-size: 21px;
+  margin-bottom: 7px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.weather-icon {
+  font-size: 48px;
+}
+
+.temperature-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 28px 0;
+}
+
+.temperature {
+  font-size: clamp(60px, 7vw, 82px);
+  letter-spacing: -5px;
+  font-weight: 600;
+}
+
+.temperature sup {
+  font-size: 25px;
+  vertical-align: top;
+  letter-spacing: 0;
+}
+
+#conditionText {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 20px;
+}
+
+.weather-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.stat > span {
+  font-size: 20px;
+}
+
+.stat small {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin-bottom: 6px;
+}
+
+.stat strong {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* ===== GRAFIK SUHU ===== */
+.chart-card h2 {
+  margin-bottom: 8px;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  margin-top: 20px;
+}
+
+.chart-caption {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* ===== PRAKIRAAN PER JAM ===== */
+.forecast-section {
+  margin-top: 35px;
+}
+
+.forecast-section h2 {
+  margin-bottom: 17px;
+}
+
+.hourly-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.hourly-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  padding: 17px 8px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.hourly-item:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.hourly-item span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.hourly-item .hour-icon {
+  font-size: 25px;
+  color: white;
+}
+
+.hourly-item strong {
+  font-size: 16px;
+}
+
+footer {
+  margin-top: 35px;
+  padding: 22px 0 28px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+/* ===== ANIMASI ===== */
+@keyframes rainFall {
+  from { background-position: 0 0; }
+  to { background-position: -25px 100px; }
+}
+
+@keyframes cloudDrift {
+  from { transform: translateX(-10vw); }
+  to { transform: translateX(110vw); }
+}
+
+@keyframes sunPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 800px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding-top: 25px;
+  }
+
+  .chart-container {
+    height: 240px;
+  }
+}
+
+@media (max-width: 520px) {
+  .container {
+    width: 92%;
+  }
+
+  .navbar {
+    padding: 20px 0;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .live-badge {
+    font-size: 8px;
+    padding: 8px;
+  }
+
+  .hero {
+    padding-top: 25px;
+  }
+
+  h1 {
+    font-size: 39px;
+  }
+
+  .search-form {
+    gap: 5px;
+  }
+
+  .search-form input {
+    padding: 9px 5px;
+    font-size: 12px;
+  }
+
+  .search-form button {
+    padding: 12px 10px;
+    font-size: 11px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .weather-stats {
+    gap: 7px;
+  }
+
+  .stat {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stat small {
+    min-height: 24px;
+  }
+
+  .hourly-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
